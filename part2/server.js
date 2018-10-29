@@ -1,28 +1,30 @@
 let express = require('express');
 let app = express();
 let fs = require("fs");
-//let path = require("path");
+let path = require("path");
 let port = process.env.PORT || 8000;
-
+let outfile = path.join(__dirname+'/storage.json');
+console.log(outfile);
+let content = [];
 // Challenge 1
-app.post('/create/:name/:age', function (req, res) {
+app.post('/create/:name/:age',  (req, res) => {
   let person = {"name" : req.params.name,
                  "age" : parseInt(req.params.age) 
                  }
-        
-  let f = fs.readFileSync('./storage.json', 'utf8');
-  let content = JSON.parse(f);
+                 
+  let f = fs.readFileSync(outfile, 'utf8');
+  content.push(JSON.parse(f));  
+  
   content.push(person);
-  console.log(content);
-  fs.writeFileSync("/storage.json", JSON.stringify(content));
+  fs.writeFileSync(outfile, JSON.stringify(content));
   res.send('File write complete')
 })
 
-// Challenge 2
+/// Challenge 2
 app.get('/', function(req, res){
-  let h = fs.readFileSynce('./storage.json', 'utf8');
-  let content = JSON.parse(h);
-  let result = content.filter(item => item.name === req.params.name)[0];
+  let h = fs.readFileSync(outfile, 'utf8');
+  let rcontent = JSON.parse(h);
+  let result = rcontent.filter(item => item.i === req.params.i);
   if(result){
     res.json(result);
   }else{

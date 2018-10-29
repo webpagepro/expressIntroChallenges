@@ -2,23 +2,22 @@ var express = require('express');
 var app = express();
 var port = process.env.PORT || 8000;
 var path = require('path');
-/*
-// ONE
+ 
+//ONE
 app.get('/hello', function(req, res) {
   res.send("Hello!");
 });
 
-app.use(function(req, res) {
-  res.sendStatus(404);
-});
+
 
 // TWO
 app.get('/create/:name', function(req, res) {
-  let obj = { "id":1, "name":req.params.name };
-  console.log(obj)
-  let prnt =  res.json(obj);
-  app.post('/')
-    res.send(prnt);
+  let name = { "id":1, "name":req.params.name };
+  console.log(name)
+  let result = res.json(name);
+  app.post('/', function(req, res){
+       res.send(name);
+  }) 
 });
 
 // THREE
@@ -27,7 +26,7 @@ app.get('/', function(req, res) {
   console.log(path.resolve('index.html'));
   res.sendFile(path.join(__dirname+'/index.html'))
 });
-*/
+ 
 // FOUR
 app.get('/verify/:age', function(req, res) {
   let age = req.params.age;
@@ -38,11 +37,7 @@ app.get('/verify/:age', function(req, res) {
   }
   console.log(age)
  
-  //app.post('/')
-   // res.send();
-//  res.send(res.status());
 });
-
 
   app.use(function(req, res) {
     res.sendStatus(404);
